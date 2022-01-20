@@ -1,0 +1,112 @@
+Kefa hates coins and thinks that coins are a currency of the poor.
+
+She has N coins with her, ith of them having the value Ai.
+She goes to a shop to buy M gifts, with the price of ith gift being Pi.
+
+She wants to get rid of as many coins as she can and she buys the gift one by one from the 1st one to the Mth one. She adopts the following strategy while buying any particular gift i : She wants to give the shopkeeper a total of X coins whose value sum up to K such that -
+
+K ≥ Pi
+X is maximized
+K - Pi is minimized
+She does not consider other gifts while buying a particular gift i.e. while buying every gift she tries her best to satisfy the above conditions for that gift.
+
+Your task is, given the array A and the array P, for every gift, find and print the values of X and K, or print -1 -1 if she will not be able to buy the gift at all.
+
+INPUT
+First line contains two numbers N and M.
+Second line contains the array A of size N.
+Third line contains the array P of size M.
+
+INPUT
+Print M lines of output, for every gift two integers on a new line.
+The two integers should denote the values of X and K while buying that gift optimally.
+If it is not possible to buy a particular gift with available coins, print "-1 -1"
+
+CONSTRAINTS
+1 ≤ N, M ≤ 105
+1 ≤ Ai, Pi ≤ 105
+
+Sample Input 0
+
+10 5
+1 2 3 4 5 1 2 3 4 5
+6
+6
+6
+6
+6
+Sample Output 0
+
+4 6
+2 6
+2 8
+2 10
+-1 -1
+Contest ends in an hour
+Submissions: 1779
+Max Score: 100
+Rate This Challenge:
+
+    
+More
+ 
+1
+#include <stdio.h>
+2
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+3
+​
+4
+const int INF = 100000;
+5
+​
+6
+//k is number of denominations of the coin or length of d
+7
+int coin_change(int d[], int n, int k) {
+8
+  int M[n+1];
+9
+  M[0] = 0;
+10
+​
+11
+  int i, j;
+12
+  for(j=1; j<=n; j++) {
+13
+    int minimum = INF;
+14
+​
+15
+    for(i=1; i<=k; i++) {
+16
+      if(j >= d[i]) {
+17
+        minimum = MIN(minimum, 1+M[j-d[i]]);
+18
+      }
+19
+    }
+20
+    M[j] = minimum;
+21
+  }
+22
+  return M[n];
+23
+}
+24
+​
+25
+int main() {
+26
+  // array starting from 1, element at index 0 is fake
+27
+  int d[] = {0, 1, 2, 3};
+28
+  printf("%d\n", coin_change(d, 5, 3)); //to make 5. Number of denominations = 3
+29
+  return 0;
+30
+}
